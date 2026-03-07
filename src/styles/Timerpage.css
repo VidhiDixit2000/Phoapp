@@ -1,0 +1,57 @@
+/* MAIN CONTAINER */
+.timer-container {
+  background: linear-gradient(180deg, #1e2645, #11162d);
+  width: 420px;
+  padding: 30px;
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+/* HOURS / MINUTES / SECONDS BLOCK */
+.timer-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+/* HEADINGS */
+.timer-container h6 {
+  font-size: 14px;
+  margin-bottom: 8px;
+  opacity: 0.8;
+}
+
+/* NUMBER */
+.time-box {
+  font-size: 36px;
+  font-weight: 600;
+  margin: 6px 0;
+}
+
+/* ARROW BUTTONS */
+.increment,
+.decrement {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+  color: white;
+}
+
+.increment svg,
+.decrement svg {
+  font-size: 18px;
+}
+
+/* HOVER EFFECT */
+.increment:hover,
+.decrement:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
