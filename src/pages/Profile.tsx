@@ -3,6 +3,7 @@ import Timerpage  from './Timerpage';
 import Weather from './Weather';  
 import Randomfacts from './Randomfacts'; 
 import { useNavigate } from 'react-router-dom';
+import '../styles/Profile.css';
 const Profile = () => {
   const navigate = useNavigate();
   type parsedDetailsType = {
@@ -18,23 +19,30 @@ const Profile = () => {
     <>
       {parsedDetails && (
         <>
-          <div>
-            <p>Name: {parsedDetails.name}</p>
-            <p>Email: {parsedDetails.email}</p>
+        <section className="profile-top-row">
+          <div className="profile-user-card">
+            <p>{parsedDetails.name}</p>
+            <p>{parsedDetails.email}</p>
+            <div className="selected-movies-list">
+
+            {selectedMovies.map((movieTitle:string) => (
+              <div className="movie-chip">{movieTitle}</div>
+            ))}
+            </div>
           </div>
 
-          <div>
-            <h2>Selected Movies</h2>
-            {selectedMovies.map((movieTitle:string) => (
-              <div >{movieTitle}</div>
-            ))}
+          
+        </section>
+        <section className="profile-top-row">
             <div>
-               <Timerpage></Timerpage>
-               <Weather></Weather>
-               <Randomfacts></Randomfacts>
+              <div className="profile-timer-card"> <Timerpage></Timerpage></div>
+               
+               <div className="profile-weather-card"><Weather ></Weather></div>
+              <div className="profile-randomfacts-card"><Randomfacts></Randomfacts></div>
             </div>
-            <div><button onClick={()=>navigate("/moviewidget")}>View Selected Movies</button></div>
-          </div>
+            </section>
+            <div className="profile-cta"><button onClick={()=>navigate("/moviewidget")}>View Selected Movies</button></div>
+          
         </>
       )}
     </>
