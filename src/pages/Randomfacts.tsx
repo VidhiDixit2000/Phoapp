@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-
+import '../styles/Randomfacts.css';
 const Randomfacts = () => {
     const [fact, setFact] = useState<string>();
     const [image, setImage] = useState<string>();
@@ -20,20 +20,20 @@ useEffect(() => {
   getrandomfact();
 }, []);
   return (
-    <div>
-    <div>
+    <div className="randomfacts-image-widget">
+    <div className="randomfacts-image-wrap">
       {image && <img src={image} alt="Random Fact" width="30%" />}
       
     </div>
-    <div>
+    <div className="randomfacts-text">
         {fact}
     </div>
-    <a href={url} target="_blank" rel="noopener noreferrer">
+    <a href={url} target="_blank" rel="noopener noreferrer" className="randomfacts-link">
   <button>Browse</button>
 </a>
 
     </div>
-  )
-}
+  );
+};
 
 export default Randomfacts

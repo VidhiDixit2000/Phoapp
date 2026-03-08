@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useMemo } from 'react';
-
+import '../styles/Weather.css';
 const Weather = () => {
 
 
@@ -45,24 +45,24 @@ useEffect(() => {
   const time= now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
   
   return (
-    <div>
-      <div>
-        <p>Weather: {weatherData.weather}</p>
+    <div className="weather-widget">
+       <div className="weather-date-row">
+        <span>
+          {day}-{month}-{year}
+        </span>
+        <span>{time}</span>
       </div>
-      <div>
-        <div>Temperature: {(weatherData.temp - 273.15).toFixed(1)}°C</div>
-        <div>Air Pressure: {weatherData.airpressure} mbar</div>
-    </div>
-    <div>
-      <div>Wind Speed: {(weatherData.windspeed * 3.6).toFixed(1)} km/h</div>
-      <div>Humidity: {weatherData.humidity}%</div>
-    </div>
-    <div>
-      <p>Date: {day}-{month}-{year}</p>
-      <p>
-        Time: {time}
-      </p>
-    </div>
+        <div className="weather-main-row">
+        <div className="weather-type">{weatherData.weather || '--'}</div>
+        <div className="weather-temp">{(weatherData.temp - 273.15).toFixed(1)}°C</div>
+      </div>
+
+      <div className="weather-metrics-grid">
+        <div>Wind: {(weatherData.windspeed * 3.6).toFixed(1)} km/h</div>
+        <div>Pressure: {weatherData.airpressure} mbar</div>
+        <div>Humidity: {weatherData.humidity}%</div>
+      </div>
+    
     </div>
   );
 };

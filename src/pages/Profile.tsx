@@ -2,6 +2,7 @@ import React from 'react'
 import Timerpage  from './Timerpage';
 import Weather from './Weather';  
 import Randomfacts from './Randomfacts'; 
+import Notes from './Notes';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Profile.css';
 const Profile = () => {
@@ -17,6 +18,7 @@ const Profile = () => {
   const selectedMovies = JSON.parse(localStorage.getItem("selectedMovies") ?? "[]");
   return (
     <>
+    <div className="profile-page">
       {parsedDetails && (
         <>
         <section className="profile-grid">
@@ -33,18 +35,20 @@ const Profile = () => {
 
           
         </section>
-        
+        <section className="profile-notes-card"><Notes></Notes></section>
+        <section className="profile-randomfacts-card"><Randomfacts></Randomfacts></section>
+          <section className="profile-weather-card"><Weather ></Weather></section>
           
               <section className="profile-timer-card"> <Timerpage></Timerpage></section>
                
-               <section className="profile-weather-card"><Weather ></Weather></section>
-              <section className="profile-randomfacts-card"><Randomfacts></Randomfacts></section>
-         
+              
+              
            
             <div className="profile-cta"><button onClick={()=>navigate("/moviewidget")}>View Selected Movies</button></div>
           
         </>
       )}
+      </div>
     </>
   );
 };

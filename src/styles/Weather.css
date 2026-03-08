@@ -1,0 +1,33 @@
+.weather-widget {
+  color: #fff;
+  display: grid;
+  gap: 10px;
+}
+
+.weather-date-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+}
+
+.weather-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.weather-type {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.weather-temp {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.weather-metrics-grid {
+  display: grid;
+  gap: 6px;
+  font-size: 0.9rem;
+}

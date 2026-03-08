@@ -1,0 +1,31 @@
+.randomfacts-widget {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.randomfacts-image-wrap img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+}
+
+.randomfacts-text {
+  padding: 14px;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  color: #111;
+}
+
+.randomfacts-link {
+  margin: 0 14px 14px;
+}
+
+.randomfacts-link button {
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: #fff;
+  background: #148a08;
+  cursor: pointer;
+}
