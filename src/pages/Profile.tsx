@@ -19,7 +19,7 @@ const Profile = () => {
     <>
       {parsedDetails && (
         <>
-        <section className="profile-top-row">
+        <section className="profile-grid">
           <div className="profile-user-card">
             <p>{parsedDetails.name}</p>
             <p>{parsedDetails.email}</p>
@@ -33,14 +33,14 @@ const Profile = () => {
 
           
         </section>
-        <section className="profile-top-row">
-            <div>
-              <div className="profile-timer-card"> <Timerpage></Timerpage></div>
+        
+          
+              <section className="profile-timer-card"> <Timerpage></Timerpage></section>
                
-               <div className="profile-weather-card"><Weather ></Weather></div>
-              <div className="profile-randomfacts-card"><Randomfacts></Randomfacts></div>
-            </div>
-            </section>
+               <section className="profile-weather-card"><Weather ></Weather></section>
+              <section className="profile-randomfacts-card"><Randomfacts></Randomfacts></section>
+         
+           
             <div className="profile-cta"><button onClick={()=>navigate("/moviewidget")}>View Selected Movies</button></div>
           
         </>

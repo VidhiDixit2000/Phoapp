@@ -9,7 +9,7 @@ const navigate = useNavigate();
 if (!context) {
   throw new Error("This component must be wrapped in AuthContext");
 }
-
+const{notes}=context
 const {saveNotes} = context;
  //useMemo controls creation of debounce,NOT execution of debounce.
   // However, if we use useffect, along with debounce, make value as dependency var, so it will run on each input change, which w edont want.And if we use Savenotes as dependency var and use callback in the auth context, then useffect wont run(coz unlike usememo, useffect handle both creation and execution of the function) and if we dont then debounce will be recreated on each render, which we dont want either.
@@ -19,14 +19,14 @@ const debounceSavednotes=useMemo(() => debounce((value:string)=>
   
     saveNotes(value);
  },3000), [saveNotes]);
-const handleonchange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  const value = (event.target as HTMLInputElement).value;
+const handleonchange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const value = (event.target as HTMLTextAreaElement).value;
     debounceSavednotes(value);
 }
   return (
     <div>
       <div>
-        <input type="text" placeholder="notes" onChange={handleonchange}/>
+        <textarea value={notes??''} placeholder="Write your notes here" onChange={handleonchange}/>
       </div>
      <div><button onClick={() => navigate("/moviewidget")}>Next</button></div>
     </div>

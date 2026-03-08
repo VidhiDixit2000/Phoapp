@@ -1,6 +1,7 @@
 import React,{useState,useContext} from 'react';
 import { Data } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import '../styles/Login.css';
 export default function App() {
   const navigate = useNavigate();
 const context = useContext(Data);
@@ -102,22 +103,49 @@ const { signup } = context;
       console.log('error',error);
     }
   return (
-    <div>
-      <form onSubmit={handlesubmit}>
-        <input type="text" name="Name" placeholder="Name" value = {userdet.Name} onChange={handlechange} />
-        {error.Name && <p>Name is required</p>}
-        <input type="text" name="Email" placeholder="Email" value = {userdet.Email} onChange={handlechange} />
-        {error.Email && <p>Email is required</p>}
-        <input type="text" name="Password" placeholder="Password" value = {userdet.Password} onChange={handlechange} />
-        {error.Password && <p>Password is required</p>}
-        <input type="text" name="ConfirmPassword" placeholder="ConfirmPassword" value = {userdet.ConfirmPassword} onChange={handlechange} />
-        {error.ConfirmPassword && <p>Confirm Password is required</p>}
-        <input type="text" name="PhoneNumber" placeholder="PhoneNumber" value = {userdet.PhoneNumber} onChange={handlechange} />
-        {error.PhoneNumber && <p>Phone Number is required</p>}
-        <input type="checkbox" name="AcceptTerms" id="tnc" checked={userdet.AcceptTerms} onChange={handlechange}/><label htmlFor="tnc">Accept Terms and Conditions</label>
-        {error.AcceptTerms && <p>You must accept the terms and conditions</p>}
-        <label htmlFor="tnc">Accept Terms and Conditions</label>
-        <button type="submit">Submit</button>
+  <div className="login-page">
+      <section className="login-hero">
+        <p>Discover new things on Superapp</p>
+      </section>
+
+      <form className="login-card" onSubmit={handlesubmit}>
+        <h1>Super app</h1>
+        <p className="login-subtitle">Create your new account</p>
+
+        <input type="text" name="Name" placeholder="Name" value={userdet.Name} onChange={handlechange} />
+        {error.Name && <p className="field-error">Name is required</p>}
+
+        <input type="text" name="Email" placeholder="Email" value={userdet.Email} onChange={handlechange} />
+        {error.Email && <p className="field-error">Email is required</p>}
+
+        <input type="password" name="Password" placeholder="Password" value={userdet.Password} onChange={handlechange} />
+        {error.Password && <p className="field-error">Password is required</p>}
+
+        <input
+          type="password"
+          name="ConfirmPassword"
+          placeholder="Confirm Password"
+          value={userdet.ConfirmPassword}
+          onChange={handlechange}
+        />
+        {error.ConfirmPassword && <p className="field-error">Confirm password is required</p>}
+
+        <input
+          type="text"
+          name="PhoneNumber"
+          placeholder="Phone Number"
+          value={userdet.PhoneNumber}
+          onChange={handlechange}
+        />
+        {error.PhoneNumber && <p className="field-error">Phone number is required</p>}
+
+        <label className="terms-row" htmlFor="tnc">
+          <input type="checkbox" name="AcceptTerms" id="tnc" checked={userdet.AcceptTerms} onChange={handlechange} />
+          Share my registration data with Superapp
+        </label>
+        {error.AcceptTerms && <p className="field-error">You must accept the terms and conditions</p>}
+
+        <button type="submit">SIGN UP</button>
       </form>
     </div>
   )
