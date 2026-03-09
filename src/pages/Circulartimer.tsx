@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../styles/Timerpage.css';
 interface Props {
   totalSeconds: number;
   remainingSeconds: number;
@@ -35,7 +35,7 @@ const Circulartimer: React.FC<Props> = ({
   
 
       </svg>
-      <div>{formattime(remainingSeconds)}</div>
+      <div className="timer-display">{formattime(remainingSeconds)}</div>
     </div>
     
   )

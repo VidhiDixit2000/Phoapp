@@ -19,36 +19,47 @@ const Profile = () => {
   return (
     <>
     <div className="profile-page">
-      {parsedDetails && (
-        <>
-        <section className="profile-grid">
-          <div className="profile-user-card">
-            <p>{parsedDetails.name}</p>
-            <p>{parsedDetails.email}</p>
-            <div className="selected-movies-list">
+  {parsedDetails && (
+    <section className="profile-grid">
 
-            {selectedMovies.map((movieTitle:string) => (
-              <div className="movie-chip">{movieTitle}</div>
-            ))}
+      <div className="profile-user-card">
+        <p>{parsedDetails.name}</p>
+        <p>{parsedDetails.email}</p>
+
+        <div className="selected-movies-list">
+          {selectedMovies.map((movieTitle: string) => (
+            <div key={movieTitle} className="movie-chip">
+              {movieTitle}
             </div>
-          </div>
-
-          
-        </section>
-        <section className="profile-notes-card"><Notes></Notes></section>
-        <section className="profile-randomfacts-card"><Randomfacts></Randomfacts></section>
-          <section className="profile-weather-card"><Weather ></Weather></section>
-          
-              <section className="profile-timer-card"> <Timerpage></Timerpage></section>
-               
-              
-              
-           
-            <div className="profile-cta"><button onClick={()=>navigate("/moviewidget")}>View Selected Movies</button></div>
-          
-        </>
-      )}
+          ))}
+        </div>
       </div>
+
+      <div className="profile-notes-card">
+        <Notes />
+      </div>
+
+      <div className="profile-weather-card">
+        <Weather />
+      </div>
+
+      <div className="profile-timer-card">
+        <Timerpage />
+      </div>
+
+      <div className="profile-fact-card">
+        <Randomfacts />
+      </div>
+
+      <div className="profile-cta">
+        <button onClick={() => navigate("/moviewidget")}>
+          View Selected Movies
+        </button>
+      </div>
+
+    </section>
+  )}
+</div>
     </>
   );
 };

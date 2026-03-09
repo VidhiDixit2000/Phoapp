@@ -1,6 +1,6 @@
 import { useState,useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
-
+import '../styles/Movielistboard.css';
 export default function App() {
 const navigate = useNavigate();
 
@@ -31,17 +31,47 @@ else{
 }
 }
   return (
-    <div>
-      <h1>Home Page</h1>
-      <div>
-        {movies.map(movie=><div onClick={()=>handleclick(movie.title)}>{movie.title}</div>)}
-      </div>
-      <div>
-        {selectedMovie.map(movieTitle=><div>{movieTitle}</div>)}
-    </div>
-    <div>
-      <button onClick={checkforerror}> next page</button>
-    </div>
+    <div className="movie-board-page">
+      <section className="board-left-pane">
+        <h1>Super app</h1>
+        <p>
+          Choose your entertainment category so we can tailor a profile dashboard designed around your taste.
+        </p>
+          <div className="selection-strip">
+          {selectedMovie.map((movieTitle) => (
+            <div className="selected-chip">
+            
+              {movieTitle}
+          
+            <span onClick={() => handleclick(movieTitle)}>X</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="movie-board-card">
+        <h2>Choose your entertainment category</h2>
+        <p className="board-subtitle">Minimum 3 categories required</p>
+
+      
+
+        <div className="genre-grid">
+          {movies.map((movie) => (
+            <button
+              type="button"
+              key={movie.id}
+              onClick={() => handleclick(movie.title)}
+              className={`genre-pill ${selectedMovie.includes(movie.title) ? 'active' : ''}`}
+            >
+              {movie.title}
+            </button>
+          ))}
+        </div>
+
+        <button className="next-button" onClick={checkforerror}>
+          Next Page
+        </button>
+      </section>
     </div>
   )
 }

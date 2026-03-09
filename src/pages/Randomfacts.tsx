@@ -2,6 +2,7 @@ import React,{useEffect, useState} from 'react'
 import '../styles/Randomfacts.css';
 const Randomfacts = () => {
     const [fact, setFact] = useState<string>();
+    const[title, setTitle] = useState<string>();
     const [image, setImage] = useState<string>();
     const[url, setUrl] = useState<string>();
 async function getrandomfact(){
@@ -10,7 +11,10 @@ async function getrandomfact(){
 );
 //console.log("res",JSON.parse(res));
 const data = await res.json();
-
+console.log("data", data);
+console.log("data.description", data.description);
+console.log("data.displaytitle", data.displaytitle);
+setTitle(data.description);
 setFact(data.extract);
 setImage(data.thumbnail?.source);
 setUrl(data.content_urls?.desktop?.page);
@@ -22,8 +26,9 @@ useEffect(() => {
   return (
     <div className="randomfacts-image-widget">
     <div className="randomfacts-image-wrap">
-      {image && <img src={image} alt="Random Fact" width="30%" />}
+      {image && <img src={image} alt="Random Fact"/>}
       
+    <h4 className='heading'>{title}</h4>
     </div>
     <div className="randomfacts-text">
         {fact}

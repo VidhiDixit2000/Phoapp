@@ -4,26 +4,56 @@
   width: 100%;
 }
 
+/* IMAGE WRAPPER */
+.randomfacts-image-wrap {
+  position: relative;
+}
+
+/* IMAGE */
 .randomfacts-image-wrap img {
   width: 100%;
   height: 230px;
   object-fit: cover;
+
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
+/* OVERLAY TITLE */
+.heading {
+  position: absolute;
+  left: 0;
+ 
+
+
+
+top: 9.5rem;
+    width: 100%;
+    padding: 14px 3px;
+  background: 
+    linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.8) 100%);
+
+  color: white;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* TEXT */
 .randomfacts-text {
-  padding: 14px;
+  padding: 1.5rem 14px;
   line-height: 1.5;
   font-size: 0.95rem;
   color: #111;
 }
 
+/* BUTTON */
 .randomfacts-link {
   margin: 0 14px 14px;
 }
 
 .randomfacts-link button {
   border: 0;
-  border-radius: 999px;
+  border-radius: 9px;
   padding: 8px 16px;
   color: #fff;
   background: #148a08;

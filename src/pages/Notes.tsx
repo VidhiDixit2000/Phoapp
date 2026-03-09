@@ -28,7 +28,6 @@ const handleonchange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       <div>
         <textarea value={notes??''} placeholder="Write your notes here" onChange={handleonchange}/>
       </div>
-     <div><button onClick={() => navigate("/moviewidget")}>Next</button></div>
     </div>
   )
 }
