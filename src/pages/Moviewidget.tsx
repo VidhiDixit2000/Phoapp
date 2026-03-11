@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-
+import '../styles/Moviewidget.css';
 const Moviewidget = () => {
-  const [selectedmoviesvsid, setselectedmoviesvsid] = useState<Record<string, string>>({});
-  const [selectedmoviesvsposter, setselectedmoviesvsposter] = useState<Record<string, string[]>>({});
+  const [selectedidvsmovies, setselectedidvsmovies] = useState<Record<string, string>>({});
+  const [selectedidvsposter, setselectedidvsposter] = useState<Record<string, string[]>>({});
   const API_KEY = "713d092437a0d2e3c99186265d1f65c5";
  
 
@@ -11,7 +11,7 @@ const Moviewidget = () => {
   
 
   useEffect(() => {
-     console.log("updated state", selectedmoviesvsid);
+     console.log("updated state", selectedidvsmovies);
     async function showMovieaccToGenre() {
       const res2 = await fetch(
         `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
@@ -25,17 +25,17 @@ const Moviewidget = () => {
             console.log("genrefound", genrefound);
 
         if (genrefound) {
-         genreMap[genrefound.name] = genrefound.id;
+         genreMap[genrefound.id] = genrefound.name;
         }
         else{
              console.log("Genre not found");
           return;
         }
 });
-        setselectedmoviesvsid(genreMap);
+        setselectedidvsmovies(genreMap);
       
-console.log("selectedmoviesvsid", selectedmoviesvsid);
-      Object.values(genreMap).forEach(async (id: string) => {
+console.log("selectedidvsmovies", selectedidvsmovies);
+      Object.keys(genreMap).forEach(async (id:string) => {
         const res1 = await fetch(
           `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${id}`
         );
@@ -46,7 +46,7 @@ console.log("selectedmoviesvsid", selectedmoviesvsid);
           .slice(0, 4)
           .map((item: any) => item.poster_path)
             
-      setselectedmoviesvsposter(prev=>({
+      setselectedidvsposter(prev=>({
         ...prev,
         [id]: posters
       }));
@@ -56,41 +56,28 @@ console.log("selectedmoviesvsid", selectedmoviesvsid);
     showMovieaccToGenre();
   }, []);
 
-  return (
-    <div>
-      {Object.entries(selectedmoviesvsposter).map(([id, poster]) => (
-        <div key={id}>
-          <h4 style={{ color: "grey" }}>{selectedmoviesvsid[id]}</h4>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4,1fr)",
-              gap: "10px",
-            }}
-          >
-            {poster.map((item, index) => (
-              <div
-                key={index}
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  backgroundColor: "lightblue",
-                }}
-              >
-                <img
-                  src={`https://image.tmdb.org/t/p/w500${item}`}
-                  alt={`movie-${index}`}
-                  width="100"
-                  height="100"
-                />
-              </div>
-            ))}
-          </div>
+ return (
+  <div className="movie-widget-container">
+    {Object.entries(selectedidvsposter).map(([id, poster]) => (
+      <div key={id} className="movie-genre-section">
+        <h4 className="movie-genre-title">
+          {selectedidvsmovies[id]}
+        </h4>
+        <div className="movie-genre-grid">
+          {poster.map((item, index) => (
+            <div key={index} className="movie-poster-card">
+              <img
+                src={`https://image.tmdb.org/t/p/w500${item}`}
+                alt={`movie-${index}`}
+              />
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-  );
+      </div>
+    ))}
+  </div>
+);
+
 };
 
 export default Moviewidget;

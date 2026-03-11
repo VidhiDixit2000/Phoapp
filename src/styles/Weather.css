@@ -57,7 +57,3 @@
 .weather-humidity {
     grid-area: weather-humidity;
 }
-.border1 .border2 {
-    border-right: 1px solid red;
-    
-}
