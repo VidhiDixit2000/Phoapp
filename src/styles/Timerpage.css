@@ -1,6 +1,5 @@
 /* OUTER CARD */
 .timer-wrapper {
- 
   padding: 15px;
   width: 100%;
 
@@ -10,46 +9,37 @@
   padding-left: 5rem;
 }
 
-/* CIRCLE TIMER */
+/* CIRCLE TIMER
+   180px to match the SVG's max-width — it was 160px, which squeezed the
+   ring. position: relative removed: it only existed to anchor the
+   absolutely-positioned .timer-display, which no longer exists (the time
+   is now a <text> element inside the SVG). */
 .timer-circle {
-  width: 160px;
-  height: 160px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   background: #1a1f3f;
 
   display: flex;
   align-items: center;
   justify-content: center;
-
-  position: relative;
 }
 
-/* PROGRESS RING */
-.timer-circle::before {
-  content: "";
-  position: absolute;
-  inset: 10px;
-  border-radius: 50%;
-  border: 6px solid #ff6b6b;
+/* The .timer-circle::before "PROGRESS RING" block was deleted. Despite the
+   name it was a static salmon border that never changed — a placeholder from
+   before the real SVG ring existed. It sat on top of the actual progress
+   ring, which is why the ring was barely visible.
+
+   .timer-display was deleted too. That div is gone; the time renders inside
+   the SVG now, centred by textAnchor/dominantBaseline rather than by
+   hardcoded top/left offsets. */
+
+.timer-settings {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-gap: 1.2rem;
 }
 
-/* TIMER TEXT */
-.timer-display {
-  color: white;
-  font-size: 24px;
-  font-weight: 600;
-  position: absolute;
-    top: 4rem;
-    left: 1.5rem;
-
-}
-
-.timer-settings
-  {
-    display: grid;
-   grid-template-rows: 1fr auto;
-    grid-gap: 1.2rem;
-  }
 /* RIGHT SIDE CONTAINER */
 .timer-controls {
   display: flex;
@@ -65,11 +55,13 @@
   color: white;
 }
 
-/* LABEL */
-.time-block span {
+/* LABEL
+   Selector was .time-block span, but the JSX uses <h6> — so this never
+   applied and the labels rendered with default h6 margins. */
+.time-block h6 {
   font-size: 14px;
   opacity: 0.8;
-  margin-bottom: 6px;
+  margin: 0 0 6px;
 }
 
 /* NUMBER */
@@ -89,7 +81,7 @@
 /* ARROWS */
 .increment,
 .decrement {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   border: none;
   border-radius: 6px;
   padding: 6px;
@@ -99,22 +91,84 @@
 
 .increment:hover,
 .decrement:hover {
-  background: rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.3);
 }
 
-/* START BUTTON */
+.timer-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* SHARED SHAPE — start, pause, reset
+   Same padding, radius, border and font for all three, so they read as one
+   set of related controls. Only the fill differs (see .start-btn below).
+   One rule rather than three copies means they can't drift apart later. */
+.start-btn,
+.pause-btn,
+.reset-btn {
+  padding: 9px 30px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  background: transparent;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, opacity 0.18s ease;
+}
+
+.start-btn:hover,
+.pause-btn:hover,
+.reset-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.start-btn:focus-visible,
+.pause-btn:focus-visible,
+.reset-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* PRIMARY — start is filled so the main action is obvious without reading
+   the labels. Pause and reset stay outlined as secondary actions. Identical
+   styling on all three would leave a first-time user with no cue about
+   which one to press. */
 .start-btn {
   background: #ff6b6b;
-  border: none;
-  color: white;
-  padding: 6px 40px;
-    border-radius: 9px;
-  font-size: 16px;
-  cursor: pointer;
+  border-color: #ff6b6b;
 }
-
-
 
 .start-btn:hover {
   background: #ff5252;
+  border-color: #ff5252;
+}
+
+/* Disabled pause stays in place rather than disappearing, so the button row
+   doesn't jump. not-allowed + reduced opacity signal why it won't respond. */
+.pause-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.pause-btn:disabled:hover {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.circular-timer {
+  display: block;
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+}
+
+.circular-timer-progress {
+  transition: stroke-dashoffset 1s linear;
 }

@@ -1,0 +1,58 @@
+/* Shared shape for the app's two chrome buttons: logout (top-right of every
+   protected page) and back-to-profile (bottom of the movie widget).
+   Same padding, radius, border and font so they read as one family — only
+   the fill differs. One rule rather than two copies means they can't drift
+   apart later. */
+.logout-btn,
+.widget-back-button {
+  padding: 11px 26px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+/* Logout is fixed rather than placed in each page's layout. The protected
+   pages all have different layouts (grid, two-pane, flow), so fixed
+   positioning is the one approach that lands it in the same spot on all of
+   them without touching any of their stylesheets.
+   The solid dark background matters: on Profile it sits over the white facts
+   card, so a transparent button would be unreadable there. */
+.logout-btn {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 50;
+}
+
+/* PRIMARY — "Back to profile" is the main action on the widget page, so it's
+   filled. The green matches "View selected movies" on Profile, which is the
+   button that sent the user here in the first place.
+   Logout stays outlined: it's a secondary, destructive action and shouldn't
+   compete for attention. Filling both would leave nothing signalling which
+   one is the expected next step. */
+.widget-back-button {
+  background: #148a08;
+  border-color: #148a08;
+}
+
+.widget-back-button:hover {
+  background: #0f6b06;
+  border-color: #0f6b06;
+}
+
+.logout-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
+.logout-btn:focus-visible,
+.widget-back-button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}

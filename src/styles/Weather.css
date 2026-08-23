@@ -1,22 +1,26 @@
-
-
-.weather-metrics-grid {
-    display: grid;
-    grid-template:"weather-type weather-temp" 
-                  "weather-wind weather-pressure weather-humidity";
-    grid-template-rows: auto auto;
-    font-size: 0.9rem;
-}.weather-widget {
+/* auto 1fr: the pink band takes exactly the height it needs, the metrics
+   take everything left over. The 12px gap guarantees breathing room under
+   the pink even when the card is short. */
+.weather-widget {
     color: #fff;
     display: grid;
-    gap: 10px;
+    grid-template-rows: auto 1fr;
+    gap: 12px;
 }
 
+/* The pink band is now this element's OWN background, so it's exactly as
+   tall as the text inside it. The negative margins cancel the card's
+   10px/14px padding so the pink bleeds edge to edge; the card already has
+   overflow: hidden, which clips it to the rounded corners. */
 .weather-date-row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    min-height: 34px;
+    margin: -10px -14px 0;
+    padding: 6px 14px;
+    background: #ff4ecb;
     font-weight: 700;
-
 }
 
 .weather-main-row {
@@ -25,35 +29,45 @@
     align-items: baseline;
 }
 
-.weather-type {
-            font-size: 1.25rem;
-    font-weight: 700;
-    margin-top: 10px;
-    background-color: black;
-    
-}
-
-.weather-temp {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-top: 10px;
-}
-
+/* The old file declared .weather-metrics-grid twice. The first used
+   grid-template with a 2-column row and a 3-column row, which is invalid
+   and was silently discarded — only this one ever applied.
+   align-content: center vertically centres both rows inside the 1fr track. */
 .weather-metrics-grid {
     display: grid;
     grid-template-areas:
-  "weather-type weather-temp ."
-  "weather-wind weather-pressure weather-humidity";
+        "weather-type weather-temp ."
+        "weather-wind weather-pressure weather-humidity";
     grid-template-rows: auto auto;
     font-size: 0.9rem;
     row-gap: 0.5rem;
+    column-gap: 0.75rem;
+    align-content: center;
 }
+
+/* background-color: black removed — that was the block behind "Rain".
+   margin-top: 10px removed too; row-gap handles spacing now, and the
+   margin was pushing this row down into the old gradient boundary. */
+.weather-type {
+    grid-area: weather-type;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.weather-temp {
+    grid-area: weather-temp;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
 .weather-wind {
     grid-area: weather-wind;
-}   
+}
+
 .weather-pressure {
     grid-area: weather-pressure;
 }
+
 .weather-humidity {
     grid-area: weather-humidity;
 }

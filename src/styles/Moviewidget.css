@@ -36,3 +36,66 @@
   object-fit: cover;
   display: block;
 }
+/* Over-fetch 8, show 4. Any poster whose image fails to load gets removed
+   by the onError handler, and the next one slides up to fill the gap —
+   so a dead URL never leaves a hole in the grid. */
+.movie-genre-grid > .movie-poster-card:nth-child(n + 5) {
+  display: none;
+}
+
+.widget-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 60px 0;
+  color: #fff;
+}
+
+.spinner {
+  width: 42px;
+  height: 42px;
+  border: 4px solid rgba(255, 255, 255, 0.18);
+  border-top-color: #148a08;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* The shimmer lives on the CARD, behind the image. While the poster is
+   downloading the img has nothing to paint, so the shimmer shows through;
+   once it loads it covers the card completely. No JS state needed.
+   It also self-cleans: a poster that fails gets removed by the onError
+   handler, so no card is left shimmering forever. */
+.movie-poster-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 180px;
+  background: linear-gradient(90deg, #1c2340 25%, #2a3358 37%, #1c2340 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  from { background-position: 100% 0; }
+  to   { background-position: 0 0; }
+}
+
+.movie-poster-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Respects the OS-level "reduce motion" setting — some people get motion
+   sickness from looping animations. */
+@media (prefers-reduced-motion: reduce) {
+  .spinner,
+  .movie-poster-card {
+    animation: none;
+  }
+}

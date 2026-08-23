@@ -12,8 +12,13 @@ const Timerpage = () => {
   const [running, setRunning] = useState(false);
   const [remainingSeconds, setRemainingSeconds] = useState(0);
 
-  const increment = (setter: React.Dispatch<React.SetStateAction<number>>) => {
-    setter((prev: number) => Math.min(prev + 1, 24));
+  // Each field needs its own ceiling. Previously all three were capped at 24,
+  // so minutes and seconds stopped there instead of at 59.
+  const increment = (
+    setter: React.Dispatch<React.SetStateAction<number>>,
+    max: number
+  ) => {
+    setter((prev: number) => Math.min(prev + 1, max));
   };
   const decrement = (setter: React.Dispatch<React.SetStateAction<number>>) => {
     setter((prev: number) => Math.max(prev - 1, 0));
@@ -23,11 +28,40 @@ const Timerpage = () => {
   }
 
   const TotalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+  // A timer is paused (rather than idle) when it has time left but isn't
+  // ticking. That distinction decides whether start resumes or restarts.
+  const isPaused = !running && remainingSeconds > 0;
+
   const startTimer = () => {
+    // Resuming: leave remainingSeconds alone and just start ticking again.
+    if (isPaused) {
+      setRunning(true);
+      return;
+    }
+
+    // Fresh start with nothing set — previously this returned silently, so
+    // clicking start looked like a broken button.
+    if (TotalSeconds <= 0) {
+      alert("Set a time first");
+      return;
+    }
 
     setRunning(true);
     setRemainingSeconds(TotalSeconds);
   }
+
+  // Stops the interval without clearing remainingSeconds. The effect's
+  // cleanup does the actual clearInterval when `running` flips to false.
+  const pauseTimer = () => {
+    setRunning(false);
+  };
+
+  const resetTimer = () => {
+    setRunning(false);
+    setRemainingSeconds(0);
+  };
+
   useEffect(() => {
     if (remainingSeconds > 0 && running !== false) {
       const interval = setInterval(() => {
@@ -51,7 +85,7 @@ const Timerpage = () => {
 
         <div className="time-block">
           <h6>Hours</h6>
-          <button className='increment' onClick={() => increment(setHours)}><IoChevronUp />
+          <button className='increment' onClick={() => increment(setHours, 23)}><IoChevronUp />
           </button>
           <div className='time-box'>{pad(hours)}</div>
           <button className='decrement' onClick={() => decrement(setHours)}><IoChevronDown />
@@ -60,7 +94,7 @@ const Timerpage = () => {
         <div className="time-separator">:</div>
         <div className="time-block">
           <h6>Minutes</h6>
-          <button className='increment' onClick={() => increment(setMinutes)}><IoChevronUp />
+          <button className='increment' onClick={() => increment(setMinutes, 59)}><IoChevronUp />
           </button>
           <div className='time-box'>{pad(minutes)}</div>
           <button className='decrement' onClick={() => decrement(setMinutes)}><IoChevronDown />
@@ -69,7 +103,7 @@ const Timerpage = () => {
         <div className="time-separator">:</div>
         <div className="time-block">
           <h6>Seconds</h6>
-          <button className='increment' onClick={() => increment(setSeconds)}><IoChevronUp />
+          <button className='increment' onClick={() => increment(setSeconds, 59)}><IoChevronUp />
           </button>
           <div className='time-box'>{pad(seconds)}</div>
           <button className='decrement' onClick={() => decrement(setSeconds)}><IoChevronDown />
@@ -78,7 +112,24 @@ const Timerpage = () => {
 
 
       </div>
-      <button className='start-btn' onClick={startTimer}>start</button>
+      <div className='timer-actions'>
+        <button className='start-btn' onClick={startTimer}>
+          {isPaused ? 'resume' : 'start'}
+        </button>
+
+        {/* Pause only makes sense while the clock is actually running, so it
+            stays disabled otherwise rather than appearing and disappearing —
+            a button that vanishes makes the row jump around. */}
+        <button
+          className='pause-btn'
+          onClick={pauseTimer}
+          disabled={!running}
+        >
+          pause
+        </button>
+
+        <button className='reset-btn' onClick={resetTimer}>reset</button>
+      </div>
     </div>
   </div>  
   );
