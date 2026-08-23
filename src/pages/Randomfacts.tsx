@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import '../styles/Randomfacts.css';
+import '../styles/randomfacts.css';
 
 type FactState = {
   title?: string;
