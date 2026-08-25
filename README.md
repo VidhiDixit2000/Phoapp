@@ -6,9 +6,11 @@ Live demo: https://phoapp.vercel.app Repo: https://github.com/VidhiDixit2000/sup
 
  
 
-![Sign up flow](./docs/Part_1.gif)
+![Part1-Register,login,Dashboard:timer](./docs/Part_1.gif)
 
-![Dashboard walkthrough](./docs/Part_2.gif)
+![Part2-Timer,Movielistboard](./docs/Part_2.gif)
+
+![Part3-Dashboard,Moviewidget](./docs/Part_3.gif)
 
 Why this exists
 
